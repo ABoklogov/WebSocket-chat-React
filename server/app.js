@@ -1,7 +1,7 @@
 const ws = require('ws');
 
 const wsServer = new ws.Server({ port: 5000 }, () =>
-  console.log('Сервер подклечен на порку 5000!'),
+  console.log('Сервер подклечен на порту 5000!'),
 );
 
 wsServer.on('connection', ws => {

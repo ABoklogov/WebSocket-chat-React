@@ -1,0 +1,10 @@
+.chatForm {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #000;
+}
+
+.chatInput {
+  width: 100%;
+}
