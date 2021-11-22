@@ -1,0 +1,23 @@
+.chat {
+  border: 1px solid #000;
+  border-radius: 5px;
+  height: auto;
+  max-width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.chatForm {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #000;
+}
+
+.chatWindow {
+  min-height: 500px;
+}
+
+.chatInput {
+  width: 100%;
+}
