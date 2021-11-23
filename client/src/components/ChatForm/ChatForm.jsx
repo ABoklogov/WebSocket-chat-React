@@ -2,7 +2,7 @@ import s from './ChatForm.module.css';
 
 const ChatForm = ({ value, setValue, sendMessage }) => {
   return (
-    <form className={s.chatForm} action="">
+    <form className={s.chatForm}>
       <input
         className={s.chatInput}
         value={value}
@@ -10,7 +10,9 @@ const ChatForm = ({ value, setValue, sendMessage }) => {
         type="text"
         placeholder="Введите сообщение"
       />
-      <button onClick={sendMessage}>Отправить</button>
+      <button type="button" onClick={sendMessage}>
+        Отправить
+      </button>
     </form>
   );
 };
