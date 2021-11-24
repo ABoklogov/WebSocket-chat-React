@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/WebSocket-chat-React/static/css/main.c1bb4998.chunk.css",
+    "main.js": "/WebSocket-chat-React/static/js/main.5c869a18.chunk.js",
+    "main.js.map": "/WebSocket-chat-React/static/js/main.5c869a18.chunk.js.map",
+    "runtime-main.js": "/WebSocket-chat-React/static/js/runtime-main.34d06043.js",
+    "runtime-main.js.map": "/WebSocket-chat-React/static/js/runtime-main.34d06043.js.map",
+    "static/css/2.383c0125.chunk.css": "/WebSocket-chat-React/static/css/2.383c0125.chunk.css",
+    "static/js/2.d1672b35.chunk.js": "/WebSocket-chat-React/static/js/2.d1672b35.chunk.js",
+    "static/js/2.d1672b35.chunk.js.map": "/WebSocket-chat-React/static/js/2.d1672b35.chunk.js.map",
+    "index.html": "/WebSocket-chat-React/index.html",
+    "static/css/2.383c0125.chunk.css.map": "/WebSocket-chat-React/static/css/2.383c0125.chunk.css.map",
+    "static/css/main.c1bb4998.chunk.css.map": "/WebSocket-chat-React/static/css/main.c1bb4998.chunk.css.map",
+    "static/js/2.d1672b35.chunk.js.LICENSE.txt": "/WebSocket-chat-React/static/js/2.d1672b35.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.34d06043.js",
+    "static/css/2.383c0125.chunk.css",
+    "static/js/2.d1672b35.chunk.js",
+    "static/css/main.c1bb4998.chunk.css",
+    "static/js/main.5c869a18.chunk.js"
+  ]
+}
