@@ -4,7 +4,11 @@ const wsServer = new ws.Server({ port: 5000 }, () =>
   console.log('Сервер подклечен на порту 5000!'),
 );
 
+const clients = [];
+
 wsServer.on('connection', ws => {
+  clients.push(ws);
+
   ws.on('message', data => {
     const message = JSON.parse(data);
 
@@ -19,10 +23,14 @@ wsServer.on('connection', ws => {
         break;
     }
   });
+  ws.on('close', () => {
+    const idx = clients.findIndex(client => client === ws);
+    clients.splice(idx, 1);
+  });
 });
 
 const broadcastMessage = message => {
-  wsServer.clients.forEach(client => {
+  clients.forEach(client => {
     client.send(JSON.stringify(message));
   });
 };
