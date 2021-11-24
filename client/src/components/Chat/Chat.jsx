@@ -11,7 +11,6 @@ const Chat = () => {
   const socket = useRef();
   const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
-  const [userID, setUserID] = useState('');
 
   const connect = () => {
     socket.current = new WebSocket('ws://localhost:5000');
@@ -27,7 +26,6 @@ const Chat = () => {
       };
 
       socket.current.send(JSON.stringify(message));
-      setUserID(message.id);
     };
 
     socket.current.onmessage = event => {
@@ -36,7 +34,7 @@ const Chat = () => {
     };
 
     socket.current.onclose = () => {
-      // console.log('Произошло отключение');
+      console.log('Произошло отключение');
     };
 
     socket.current.onerror = () => {
@@ -68,7 +66,7 @@ const Chat = () => {
 
       {connected && (
         <div className={s.chat}>
-          <ChatWindow messages={messages} />
+          <ChatWindow messages={messages} username={username} />
           <ChatForm
             value={value}
             setValue={setValue}

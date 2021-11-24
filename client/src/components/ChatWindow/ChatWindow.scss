@@ -1,0 +1,26 @@
+.chatWindow {
+  height: 500px;
+  overflow-y: auto;
+  border-bottom: 2px solid rgb(191, 183, 183);
+  margin-bottom: 0;
+  padding: 10px;
+}
+
+.chatWindow .item {
+  list-style-type: none;
+}
+
+.chatWindow .you {
+  background-color: rgb(101, 225, 171);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.chatWindow .user {
+  border-radius: 8px;
+  padding: 4px;
+  background-color: rgb(145, 169, 230);
+}
+.chatWindow .right {
+  text-align: right;
+}

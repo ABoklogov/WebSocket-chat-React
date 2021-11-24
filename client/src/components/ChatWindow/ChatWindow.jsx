@@ -1,21 +1,26 @@
-import s from './ChatWindow.module.css';
-import { ListGroup } from 'react-bootstrap';
+import './ChatWindow.scss';
 
-const ChatWindow = ({ messages }) => {
+const ChatWindow = ({ messages, username }) => {
   return (
-    <ListGroup className={s.chatWindow}>
-      {messages.map(mess => (
-        <ListGroup.Item key={mess.id}>
-          {mess.event === 'connection' ? (
-            <p>Пользователь {mess.username} подключился</p>
-          ) : (
-            <p>
-              {mess.username}: {mess.message}
-            </p>
-          )}
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+    <ul className="chatWindow">
+      {messages.map(mess => {
+        const messageClassName = mess.username === username ? 'you' : 'user';
+        const messagePosition = messageClassName !== 'you' && 'right';
+
+        return (
+          <li className="item" key={mess.id}>
+            {mess.event === 'connection' ? (
+              <p>Пользователь {mess.username} подключился</p>
+            ) : (
+              <p className={`${messagePosition}`}>
+                {mess.username}:{` `}
+                <span className={`${messageClassName}`}>{mess.message}</span>
+              </p>
+            )}
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
