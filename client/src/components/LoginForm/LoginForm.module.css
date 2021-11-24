@@ -1,4 +1,12 @@
 .loginForm {
   display: flex;
   justify-content: center;
+  flex-direction: row;
+}
+
+.text {
+  margin-right: 10px;
+}
+.input {
+  margin-bottom: 10px;
 }

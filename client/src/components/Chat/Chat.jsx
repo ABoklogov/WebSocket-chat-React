@@ -26,17 +26,21 @@ const Chat = () => {
       };
       socket.current.send(JSON.stringify(message));
     };
+
     socket.current.onmessage = event => {
       const message = JSON.parse(event.data);
       setMessages(prev => [...prev, message]);
     };
+
     socket.current.onclose = () => {
       console.log('Произошло отключение');
     };
+
     socket.current.onerror = () => {
       console.log('Произошла ошибка');
     };
   };
+
   const sendMessage = () => {
     const message = {
       id: shortid.generate(),
@@ -44,12 +48,13 @@ const Chat = () => {
       message: value,
       username,
     };
+
     socket.current.send(JSON.stringify(message));
     setValue('');
   };
 
   return (
-    <div className={s.chat}>
+    <>
       {!connected && (
         <LoginForm
           username={username}
@@ -59,16 +64,16 @@ const Chat = () => {
       )}
 
       {connected && (
-        <>
+        <div className={s.chat}>
           <ChatWindow messages={messages} />
           <ChatForm
             value={value}
             setValue={setValue}
             sendMessage={sendMessage}
           />
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

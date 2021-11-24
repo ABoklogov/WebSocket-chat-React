@@ -1,3 +1,5 @@
 .chatWindow {
-  min-height: 500px;
+  height: 500px;
+  overflow-y: auto;
+  border-bottom: 2px solid rgb(191, 183, 183);
 }

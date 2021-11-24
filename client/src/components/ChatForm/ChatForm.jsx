@@ -1,19 +1,21 @@
 import s from './ChatForm.module.css';
+import { Form, Button } from 'react-bootstrap';
 
 const ChatForm = ({ value, setValue, sendMessage }) => {
   return (
-    <form className={s.chatForm}>
-      <input
+    <Form className={s.chatForm}>
+      <Form.Control
         className={s.chatInput}
         value={value}
         onChange={e => setValue(e.target.value)}
         type="text"
         placeholder="Введите сообщение"
       />
-      <button type="button" onClick={sendMessage}>
+
+      <Button variant="success" type="button" onClick={sendMessage}>
         Отправить
-      </button>
-    </form>
+      </Button>
+    </Form>
   );
 };
 

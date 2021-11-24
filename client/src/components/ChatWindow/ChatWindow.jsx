@@ -1,10 +1,11 @@
 import s from './ChatWindow.module.css';
+import { ListGroup } from 'react-bootstrap';
 
 const ChatWindow = ({ messages }) => {
   return (
-    <ul className={s.chatWindow}>
+    <ListGroup className={s.chatWindow}>
       {messages.map(mess => (
-        <li key={mess.id}>
+        <ListGroup.Item key={mess.id}>
           {mess.event === 'connection' ? (
             <p>Пользователь {mess.username} подключился</p>
           ) : (
@@ -12,9 +13,9 @@ const ChatWindow = ({ messages }) => {
               {mess.username}: {mess.message}
             </p>
           )}
-        </li>
+        </ListGroup.Item>
       ))}
-    </ul>
+    </ListGroup>
   );
 };
 
