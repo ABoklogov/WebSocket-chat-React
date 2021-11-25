@@ -1,8 +1,17 @@
 import './ChatWindow.scss';
+import { useRef, useEffect } from 'react';
 
 const ChatWindow = ({ messages, username }) => {
+  const chatWindow = useRef();
+  useEffect(() => {
+    chatWindow.current.scrollTo({
+      top: 1000,
+      behavior: 'smooth',
+    });
+  });
+
   return (
-    <ul className="chatWindow">
+    <ul className="chatWindow" ref={chatWindow}>
       {messages.map(mess => {
         const messageClassName = mess.username === username ? 'you' : 'user';
         const messagePosition = messageClassName !== 'you' && 'right';
