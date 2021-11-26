@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import s from './Chat.module.css';
 import shortid from 'shortid';
 import ChatWindow from '../ChatWindow';
@@ -12,6 +12,17 @@ const Chat = () => {
   const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
   const { REACT_APP_HOST } = process.env;
+
+  useEffect(() => {
+    const localMessages = localStorage.getItem('messages');
+
+    if (!localMessages) {
+      return;
+    }
+
+    const message = JSON.parse(localMessages);
+    setMessages(prev => [...message, ...prev]);
+  }, []);
 
   const connect = () => {
     socket.current = new WebSocket(REACT_APP_HOST);
@@ -52,15 +63,29 @@ const Chat = () => {
     };
 
     socket.current.send(JSON.stringify(message));
+
+    saveLocalMessages(message);
     setValue('');
+  };
+
+  const saveLocalMessages = mess => {
+    const localMessages = localStorage.getItem('messages');
+    if (localMessages === null) {
+      localStorage.setItem('messages', JSON.stringify([mess]));
+      return;
+    }
+    const parseMessages = JSON.parse(localMessages);
+    parseMessages.push(mess);
+    localStorage.setItem('messages', JSON.stringify(parseMessages));
   };
 
   const connectEnterKey = e => {
     if (e.key === 'Enter') {
-      setConnected(true);
+      e.preventDefault();
       connect();
     }
   };
+
   const sendMessageEnter = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
