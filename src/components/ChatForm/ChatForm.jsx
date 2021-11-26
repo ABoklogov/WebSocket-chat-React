@@ -1,14 +1,15 @@
 import s from './ChatForm.module.css';
 import { Form, Button } from 'react-bootstrap';
 
-const ChatForm = ({ value, setValue, sendMessage }) => {
+const ChatForm = ({ value, setValue, sendMessage, sendMessageEnter }) => {
   return (
     <Form className={s.chatForm}>
       <Form.Control
         className={s.chatInput}
+        type="text"
         value={value}
         onChange={e => setValue(e.target.value)}
-        type="text"
+        onKeyPress={sendMessageEnter}
         placeholder="Введите сообщение"
       />
 

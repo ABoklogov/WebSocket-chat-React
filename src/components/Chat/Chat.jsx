@@ -11,9 +11,10 @@ const Chat = () => {
   const socket = useRef();
   const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
+  const { REACT_APP_HOST } = process.env;
 
   const connect = () => {
-    socket.current = new WebSocket('ws://localhost:5000');
+    socket.current = new WebSocket(REACT_APP_HOST);
 
     socket.current.onopen = () => {
       setConnected(true);
@@ -54,6 +55,19 @@ const Chat = () => {
     setValue('');
   };
 
+  const connectEnterKey = e => {
+    if (e.key === 'Enter') {
+      setConnected(true);
+      connect();
+    }
+  };
+  const sendMessageEnter = e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <>
       {!connected && (
@@ -61,6 +75,7 @@ const Chat = () => {
           username={username}
           setUsername={setUsername}
           connect={connect}
+          connectEnterKey={connectEnterKey}
         />
       )}
 
@@ -71,6 +86,7 @@ const Chat = () => {
             value={value}
             setValue={setValue}
             sendMessage={sendMessage}
+            sendMessageEnter={sendMessageEnter}
           />
         </div>
       )}

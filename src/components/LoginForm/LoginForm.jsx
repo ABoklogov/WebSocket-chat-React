@@ -1,7 +1,7 @@
 import s from './LoginForm.module.css';
 import { Form, Button } from 'react-bootstrap';
 
-const LoginForm = ({ username, setUsername, connect }) => {
+const LoginForm = ({ username, setUsername, connect, connectEnterKey }) => {
   return (
     <Form className={s.loginForm}>
       <Form.Group controlId="formBasicEmail">
@@ -10,6 +10,7 @@ const LoginForm = ({ username, setUsername, connect }) => {
           type="text"
           value={username}
           onChange={e => setUsername(e.target.value)}
+          onKeyPress={connectEnterKey}
           placeholder="Введите имя"
         />
 
