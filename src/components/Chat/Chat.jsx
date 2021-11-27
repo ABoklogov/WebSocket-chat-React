@@ -1,6 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
 import s from './Chat.module.css';
 import shortid from 'shortid';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ChatWindow from '../ChatWindow';
 import ChatForm from '../ChatForm';
 import LoginForm from '../LoginForm';
@@ -21,13 +24,18 @@ const Chat = () => {
     }
 
     const message = JSON.parse(localMessages);
-    setMessages(prev => [...message, ...prev]);
+    setMessages(prev => [...prev, ...message]);
   }, []);
 
   const connect = () => {
     socket.current = new WebSocket(REACT_APP_HOST);
 
     socket.current.onopen = () => {
+      if (username.trim() === '') {
+        toast.error(`Пожалуйста, введите имя!`, { theme: 'colored' });
+        return;
+      }
+
       setConnected(true);
       console.log('Подключение установлено!');
 
@@ -42,7 +50,7 @@ const Chat = () => {
 
     socket.current.onmessage = event => {
       const message = JSON.parse(event.data);
-      setMessages(prev => [...prev, message]);
+      setMessages([...messages, message]);
     };
 
     socket.current.onclose = () => {
@@ -55,6 +63,10 @@ const Chat = () => {
   };
 
   const sendMessage = () => {
+    if (value.trim() === '') {
+      return;
+    }
+
     const message = {
       id: shortid.generate(),
       event: 'message',
@@ -115,6 +127,7 @@ const Chat = () => {
           />
         </div>
       )}
+      <ToastContainer />
     </>
   );
 };
