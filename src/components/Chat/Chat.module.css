@@ -5,4 +5,13 @@
   max-width: 500px;
   margin-right: auto;
   margin-left: auto;
+  position: relative;
+}
+
+.closeButton {
+  left: 100%;
+  top: 0;
+  position: absolute;
+  border: 2px solid rgb(204, 196, 196);
+  border-radius: 5px;
 }

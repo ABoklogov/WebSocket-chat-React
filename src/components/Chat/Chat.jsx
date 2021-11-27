@@ -4,6 +4,7 @@ import shortid from 'shortid';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CloseButton, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ChatWindow from '../ChatWindow';
 import ChatForm from '../ChatForm';
 import LoginForm from '../LoginForm';
@@ -106,7 +107,7 @@ const Chat = () => {
   };
 
   return (
-    <>
+    <div className={s.chatContainer}>
       {!connected && (
         <LoginForm
           username={username}
@@ -125,10 +126,17 @@ const Chat = () => {
             sendMessage={sendMessage}
             sendMessageEnter={sendMessageEnter}
           />
+          <OverlayTrigger
+            overlay={<Tooltip id="tooltip-disabled">Выход</Tooltip>}
+            placement="bottom"
+            delay={{ show: 250, hide: 400 }}
+          >
+            <CloseButton className={s.closeButton} aria-label="Выход" />
+          </OverlayTrigger>
         </div>
       )}
       <ToastContainer />
-    </>
+    </div>
   );
 };
 
