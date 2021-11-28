@@ -26,15 +26,27 @@ const Chat = () => {
     setMessages([...message]);
   }, []);
 
-  // useEffect(() => {
-  //   const localConnected = localStorage.getItem('connected');
-  //   if (localConnected === null || localConnected === 'false') {
-  //     return;
-  //   }
-  //   socket.current = new WebSocket(REACT_APP_HOST);
-  //   setConnected(true);
-  // }, []);
-  // console.log(socket.current);
+  useEffect(() => {
+    const localName = localStorage.getItem('name');
+    if (!localName) {
+      return;
+    }
+    setUsername(JSON.parse(localName));
+  }, []);
+
+  useEffect(() => {
+    const localConnected = localStorage.getItem('connected');
+    if (localConnected === null || localConnected === 'false') {
+      return;
+    }
+
+    setConnected(true);
+    socket.current = new WebSocket(REACT_APP_HOST);
+    socket.current.onmessage = event => {
+      const message = JSON.parse(event.data);
+      setMessages(prev => [...prev, message]);
+    };
+  }, []);
 
   const connect = () => {
     socket.current = new WebSocket(REACT_APP_HOST);
@@ -46,7 +58,8 @@ const Chat = () => {
 
     socket.current.onopen = () => {
       setConnected(true);
-      // saveLocalConnected();
+      saveLocalConnected();
+      saveLocalName(username);
       console.log('Подключение установлено!');
 
       const message = {
@@ -59,7 +72,9 @@ const Chat = () => {
     };
 
     socket.current.onmessage = event => {
+      event.preventDefault();
       const message = JSON.parse(event.data);
+      console.log(111);
       setMessages(prev => [...prev, message]);
     };
 
@@ -76,14 +91,14 @@ const Chat = () => {
     if (value.trim() === '') {
       return;
     }
-
+    // console.log(111);
     const message = {
       id: shortid.generate(),
       event: 'message',
       message: value,
       username,
     };
-
+    // console.log(message);
     socket.current.send(JSON.stringify(message));
 
     saveLocalMessages(message);
@@ -101,14 +116,21 @@ const Chat = () => {
     localStorage.setItem('messages', JSON.stringify(parseMessages));
   };
 
-  // const saveLocalConnected = () => {
-  //   const localConnected = localStorage.getItem('connected');
-  //   if (localConnected === null) {
-  //     localStorage.setItem('connected', 'true');
-  //     return;
-  //   }
-  // };
+  const saveLocalConnected = () => {
+    const localConnected = localStorage.getItem('connected');
+    if (localConnected === null) {
+      localStorage.setItem('connected', 'true');
+      return;
+    }
+  };
 
+  const saveLocalName = name => {
+    const localName = localStorage.getItem('name');
+    if (localName === null) {
+      localStorage.setItem('name', JSON.stringify(name));
+      return;
+    }
+  };
   const connectEnterKey = e => {
     if (e.key === 'Enter') {
       e.preventDefault();

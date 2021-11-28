@@ -9,7 +9,7 @@ const ChatWindow = ({ messages, username }) => {
       behavior: 'smooth',
     });
   });
-
+  // console.log(messages);
   return (
     <ul className="chatWindow" ref={chatWindow}>
       {messages.map(mess => {

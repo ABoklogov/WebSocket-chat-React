@@ -27,10 +27,11 @@ wsServer.on('connection', ws => {
 
   ws.on('message', data => {
     const message = JSON.parse(data);
-
+    // console.log('message' + message);
     switch (message.event) {
       case 'message':
         broadcastMessage(message);
+        console.log(message.event);
         break;
       case 'connection':
         broadcastMessage(message);
