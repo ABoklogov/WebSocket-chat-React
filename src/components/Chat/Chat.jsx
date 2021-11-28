@@ -19,25 +19,34 @@ const Chat = () => {
 
   useEffect(() => {
     const localMessages = localStorage.getItem('messages');
-
     if (!localMessages) {
       return;
     }
-
     const message = JSON.parse(localMessages);
-    setMessages(prev => [...prev, ...message]);
+    setMessages([...message]);
   }, []);
+
+  // useEffect(() => {
+  //   const localConnected = localStorage.getItem('connected');
+  //   if (localConnected === null || localConnected === 'false') {
+  //     return;
+  //   }
+  //   socket.current = new WebSocket(REACT_APP_HOST);
+  //   setConnected(true);
+  // }, []);
+  // console.log(socket.current);
 
   const connect = () => {
     socket.current = new WebSocket(REACT_APP_HOST);
 
-    socket.current.onopen = () => {
-      if (username.trim() === '') {
-        toast.error(`Пожалуйста, введите имя!`, { theme: 'colored' });
-        return;
-      }
+    if (username.trim() === '') {
+      toast.error('Пожалуйста, введите имя!', { theme: 'colored' });
+      return;
+    }
 
+    socket.current.onopen = () => {
       setConnected(true);
+      // saveLocalConnected();
       console.log('Подключение установлено!');
 
       const message = {
@@ -51,7 +60,7 @@ const Chat = () => {
 
     socket.current.onmessage = event => {
       const message = JSON.parse(event.data);
-      setMessages([...messages, message]);
+      setMessages(prev => [...prev, message]);
     };
 
     socket.current.onclose = () => {
@@ -91,6 +100,14 @@ const Chat = () => {
     parseMessages.push(mess);
     localStorage.setItem('messages', JSON.stringify(parseMessages));
   };
+
+  // const saveLocalConnected = () => {
+  //   const localConnected = localStorage.getItem('connected');
+  //   if (localConnected === null) {
+  //     localStorage.setItem('connected', 'true');
+  //     return;
+  //   }
+  // };
 
   const connectEnterKey = e => {
     if (e.key === 'Enter') {
