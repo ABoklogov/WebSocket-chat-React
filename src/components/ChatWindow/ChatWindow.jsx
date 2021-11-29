@@ -5,11 +5,11 @@ const ChatWindow = ({ messages, username }) => {
   const chatWindow = useRef();
   useEffect(() => {
     chatWindow.current.scrollTo({
-      top: 1000,
+      top: 9999,
       behavior: 'smooth',
     });
   });
-  // console.log(messages);
+
   return (
     <ul className="chatWindow" ref={chatWindow}>
       {messages.map(mess => {

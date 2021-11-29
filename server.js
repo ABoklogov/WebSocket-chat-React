@@ -10,11 +10,11 @@ const { PORT = 3000 } = process.env;
 const wsServer = new ws.Server({ server: server });
 
 app.use(cors());
-// app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
-// });
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 server.listen(PORT, () => {
   console.log(`Сервер запустился на порту ${PORT}`);
@@ -27,11 +27,10 @@ wsServer.on('connection', ws => {
 
   ws.on('message', data => {
     const message = JSON.parse(data);
-    // console.log('message' + message);
+
     switch (message.event) {
       case 'message':
         broadcastMessage(message);
-        console.log(message.event);
         break;
       case 'connection':
         broadcastMessage(message);

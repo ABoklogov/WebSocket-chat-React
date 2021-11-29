@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from 'react';
 import s from './Chat.module.css';
-import shortid from 'shortid';
+import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { CloseButton, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import shortid from 'shortid';
 import ChatWindow from '../ChatWindow';
 import ChatForm from '../ChatForm';
 import LoginForm from '../LoginForm';
@@ -72,9 +72,7 @@ const Chat = () => {
     };
 
     socket.current.onmessage = event => {
-      event.preventDefault();
       const message = JSON.parse(event.data);
-      console.log(111);
       setMessages(prev => [...prev, message]);
     };
 
@@ -91,14 +89,14 @@ const Chat = () => {
     if (value.trim() === '') {
       return;
     }
-    // console.log(111);
+
     const message = {
       id: shortid.generate(),
       event: 'message',
       message: value,
       username,
     };
-    // console.log(message);
+
     socket.current.send(JSON.stringify(message));
 
     saveLocalMessages(message);
@@ -131,6 +129,7 @@ const Chat = () => {
       return;
     }
   };
+
   const connectEnterKey = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -143,6 +142,15 @@ const Chat = () => {
       e.preventDefault();
       sendMessage();
     }
+  };
+
+  const logOf = () => {
+    localStorage.clear();
+    setConnected(false);
+    setUsername('');
+    setMessages([]);
+    socket.current.onmessage = null;
+    socket.current.onopen = null;
   };
 
   return (
@@ -170,7 +178,11 @@ const Chat = () => {
             placement="bottom"
             delay={{ show: 250, hide: 400 }}
           >
-            <CloseButton className={s.closeButton} aria-label="Выход" />
+            <CloseButton
+              className={s.closeButton}
+              onClick={logOf}
+              aria-label="Выход"
+            />
           </OverlayTrigger>
         </div>
       )}
