@@ -15,7 +15,7 @@ const Chat = () => {
   const socket = useRef();
   const [connected, setConnected] = useState(false);
   const [username, setUsername] = useState('');
-  // const { REACT_APP_HOST } = process.env;
+  const { REACT_APP_HOST } = process.env;
 
   useEffect(() => {
     const localMessages = localStorage.getItem('messages');
@@ -41,7 +41,7 @@ const Chat = () => {
     }
 
     setConnected(true);
-    socket.current = new WebSocket('wss://websocket-chat-react.herokuapp.com/');
+    socket.current = new WebSocket(REACT_APP_HOST);
     socket.current.onmessage = event => {
       const message = JSON.parse(event.data);
       setMessages(prev => [...prev, message]);
@@ -49,7 +49,7 @@ const Chat = () => {
   }, []);
 
   const connect = () => {
-    socket.current = new WebSocket('wss://websocket-chat-react.herokuapp.com/');
+    socket.current = new WebSocket(REACT_APP_HOST);
 
     if (username.trim() === '') {
       toast.error('Пожалуйста, введите имя!', { theme: 'colored' });
